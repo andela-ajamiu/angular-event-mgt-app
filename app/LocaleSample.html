@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="eventsApp">
+    <head>
+        <link rel="stylesheet" href="./css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./css/app.css">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div class="container">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li><a href="/NewEvent.html">Create Event</a></li>
+                        <li><a href="/EventDetails.html">Event Details</a></li>
+                        <li><a href="/EditProfile.html">Edit Profile</a></li>
+                        <li><a href="/CacheSample.html">Cache Sample</a></li>
+                        <li><a href="/CompileSample.html">Compile Sample</a></li>
+                        <li><a href="/LocaleSample.html">Locale Sample</a></li>
+                        <li><a href="/FilterSample.html">Filter Sample</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div ng-controller="LocaleSampleController" style="padding-left: 20px; padding-right: 20px;">
+                <h3>{{today | date:myFormat}}</h3>
+
+
+                <br/><br/><br/><br/><br/>
+                <h3>Name: {{name}}</h3>
+                <button class="btn" ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+
+    <script src="./lib/jquery.min.js"></script>
+    <script src="./lib/angular/angular.js"></script>
+    <script src="./lib/angular/angular-sanitize.js"></script>
+    <script src="./lib/angular/angular-resource.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/controllers/LocaleSampleController.js"></script>
+    <script src="./js/services/EventData.js"></script>
+    <script src="./js/services/ExceptionHandler.js"></script>
+    </body>
+</html>

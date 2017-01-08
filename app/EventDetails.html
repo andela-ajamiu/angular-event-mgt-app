@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html ng-app="eventsApp">
+    <head>
+        <link rel="stylesheet" href="./css/bootstrap.min.css" />
+        <link rel="stylesheet" href="./css/app.css">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body ng-cloak>
+        <div class="container">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li><a href="/NewEvent.html">Create Event</a></li>
+                        <li><a href="/EventDetails.html">Event Details</a></li>
+                        <li><a href="/EditProfile.html">Edit Profile</a></li>
+                        <li><a href="/CacheSample.html">Cache Sample</a></li>
+                        <li><a href="/CompileSample.html">Compile Sample</a></li>
+                        <li><a href="/LocaleSample.html">Locale Sample</a></li>
+                        <li><a href="/FilterSample.html">Filter Sample</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div ng-controller="EventController" style="padding-left: 20px; padding-right: 20px">
+                <img ng-src="{{event.imageUrl}}" alt="{{event.name}}" />
+                <div class="row">
+                    <div class="span11">
+                        <h2>{{event.name}}</h2>
+                    </div>                    
+                </div>
+                <button class="btn" ng-disabled="true">A button</button>
+                <button class="btn" ng-disabled="false" ng-click="sessionScroll">Scroll Button</button>
+                <div class="row">
+                    <div class="span2">
+                        <div><strong>Date: </strong>{{event.date}}</div>
+                        <div><strong>Time: </strong>{{event.time}}</div>
+                    </div>
+                    <div class="span4">
+                        <!--<address>-->
+                            <strong>Address:</strong> <br/>
+                            {{event.location.address}},
+                            {{event.location.city}}, {{event.location.province}}
+                        <!--</address>-->
+                    </div>
+                </div>
+                <hr/>
+                <h3>Sessions</h3>
+                <div class="">
+                    Search: <input type="text" ng-model="search_query" />
+                </div>                
+                <div class="span3">
+                    Sort By: 
+                    <select ng-model="sortorder" class="input-small">
+                        <option value="name">Name</option>
+                        <option value="-voteCount">Votes</option>
+                        <option value="duration">Duration</option>
+                    </select>                
+                </div>
+                <div class="span3">
+                    Limit to:
+                    <select ng-model="limit" class="input-small">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>                
+                <div class="span3">
+                    Level:
+                    <select ng-model="level_query.level" class="input-medium">
+                        <option selected value="">All</option>
+                        <option value="Introductory">Introductory</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+                <ul class="thumbnails">
+                    <li ng-repeat="session in event.sessions | orderBy:sortorder | limitTo:limit | filter:level_query | filter:search_query" id="session{{session.id}}">
+                        <div class="row session">
+                            <div class="well span0 votingWidget">
+                                <div class="votingButton" ng-click="upVoteSession(session)">
+                                    <i class="icon-chevron-up icon-white"></i>
+                                </div>
+                                <div class="badge badge-inverse">
+                                    {{session.voteCount}}
+                                </div>
+                                <div class="votingButton" ng-click="downVoteSession(session)">
+                                    <i class="icon-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div class="well span9">
+                                <h4 class="well-title">{{session.name}}</h4>
+                                <h6 style="margin-top: -10px">{{session.creatorName}}</h6>
+
+                                <span>Duration: {{session.duration | session_durations}}</span> <br/>
+                                <span ng-bind-html="session.level | session_levels"></span>
+                                <p>{{session.abstract}}</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    <!--/*<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.6.1/angular-sanitize.js"></script>*/-->
+    <script src="./lib/angular/angular.js"></script>
+    <script src="./lib/angular/angular-sanitize.js"></script>
+    <script src="./lib/angular/angular-resource.js"></script>
+    <script src="./lib/angular/angular-cookies.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/filters.js"></script>
+    <script src="./js/controllers/EventController.js"></script>
+    <script src="./js/services/EventData.js"></script>
+
+    </body>
+</html>
