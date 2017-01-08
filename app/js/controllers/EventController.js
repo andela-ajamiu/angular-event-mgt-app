@@ -8,15 +8,29 @@ eventsApp.controller('EventController', function EventController($scope, eventDa
         });
 
     $scope.upVoteSession = function(session) {
-        userData.getUser('emjay').$promise.
+        userData.getUser($cookies.get('user')).$promise.
             then(function (user) {
                 var userSession = user.userName + '_' + session.name
                 if (!$cookies.get(userSession)) {
                     session.voteCount++;
                     $cookies.put(userSession, session.voteCount )
-                    console.log($cookies.get(userSession))
-                    console.log($cookies.getAll())
+                    user.votes = {}
+                    user.votes[session.name] = session.voteCount;
+                    // userData.updateVote(user).$promise.
+                    //     then(function (userx) {
+                    //         console.log('done', userx);
+                    //     }).
+                    //     catch(function (error) {
+                    //         console.log(error);
+                    //     });  
+
+                    // var userx = userData.updateVote(user).$promise
+
+                    console.log(user)
+                    // console.log($cookies.get('user'))
+                    // console.log($cookies.getAll())
                 } else {
+                    // $cookies.remove(userSession)
                     alert('you already voted!')
                 }
             }).
