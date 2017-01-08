@@ -6,10 +6,6 @@ eventsApp.factory('eventData', function($resource) {
 
         saveEv: function(event) {
             return $resource('/data/event/').save(event)
-        },
-
-        getUser: function(user) {
-            return $resource('/data/users/:userName' + '.json', {userName: '@userName'}).get({userName: user})
-        }        
+        }      
     }
 })
