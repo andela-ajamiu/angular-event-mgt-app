@@ -11,6 +11,8 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 app.post('/data/event/', events.saveEvent)
+app.post('/data/users/:userName', events.updateVote)
+app.post('/data/users/:userLogin', events.loginUser)
 app.post('/data/users/:userName', events.saveUser)
 
 app.listen(8000, function() {
