@@ -6,40 +6,38 @@ var fs = require('fs');
 //     res.send(event);
 // };
 
-module.exports.loginUser = function(req, res) {
-    // console.log(req.params, req.body)
-    var user = fs.readFileSync('app/data/users/' + req.params.userLogin + '.json', 'utf8');
-    
-    fs.readdir
-    // res.send(user);
-    // JSON.stringify(user)
-    res.setHeader('Content-Type', 'application/json');
-    var userx = JSON.parse(user)
-    // console.log(userx.password)
-    // console.log(typeof userx)
-    if (userx.password === req.body.password) {
-        res.send(user);
-    } else {
-        return false;
+module.exports.getAll = function (req, res) {
+    var path = 'app/data/event/';
+    var files = [];
+
+    try {
+        files = fs.readdirSync(path);
+    } catch (e) {
+        res.send('[]');
+        res.end();
     }
+    
+    var resu = [];
+
+    files.map(function (file) {
+        var newFile = fs.readFileSync(path + file, 'utf8')
+        var JSONFile = JSON.parse(newFile)
+        resu.push(JSONFile)
+    })
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(resu);
+    res.end();
+
+    // var results = "[";
+    // for (var i=0; i < files.length; i++) {
+    //     if (files[i].indexOf(".json") == files[i].length - 5 ) {
+    //         results += fs.readFileSync(path + files[i]) + ",";
+    //     }
+    // }
+    // results = results.substr(0, results.length - 1);
+    // results += "]";
 };
-
-module.exports.saveUser = function (req, res) {
-    var user = req.body;
-    fs.writeFileSync('app/data/users/' + user.userName + '.json', JSON.stringify(user));
-    res.send(user);
-}
-
-module.exports.updateVote = function (req, res) {
-    console.log('nodddd')
-    // var vote = req.body;
-    // var user = fs.readFileSync('app/data/event/' + req.params.id + '.json', 'utf8');
-    // console.log(typeof user)
-    // fs.appendFile('app/data/users/' + req.params.userFile + '.json', JSON.stringify(user));
-    // var user = fs.readFileSync('app/data/users/' + req.params.userFile + '.json', 'utf8');
-    // res.setHeader('Content-Type', 'application/json');
-    // res.send(user);
-}
 
 module.exports.saveEvent = function(req, res) {
     var event = req.body;
@@ -56,4 +54,33 @@ module.exports.saveEvent = function(req, res) {
         fs.appendFile()
         res.send(event);
     })
-}
+};
+
+module.exports.loginUser = function(req, res) {
+    var user = fs.readFileSync('app/data/users/' + req.params.userLogin + '.json', 'utf8');
+    res.setHeader('Content-Type', 'application/json');
+    var userx = JSON.parse(user)
+
+    if (userx.password === req.body.password) {
+        res.send(user);
+    } else {
+        return false;
+    }
+};
+
+module.exports.saveUser = function (req, res) {
+    var user = req.body;
+    fs.writeFileSync('app/data/users/' + user.userName + '.json', JSON.stringify(user));
+    res.send(user);
+};
+
+module.exports.updateVote = function (req, res) {
+    console.log('nodddd')
+    // var vote = req.body;
+    // var user = fs.readFileSync('app/data/event/' + req.params.id + '.json', 'utf8');
+    // console.log(typeof user)
+    // fs.appendFile('app/data/users/' + req.params.userFile + '.json', JSON.stringify(user));
+    // var user = fs.readFileSync('app/data/users/' + req.params.userFile + '.json', 'utf8');
+    // res.setHeader('Content-Type', 'application/json');
+    // res.send(user);
+};

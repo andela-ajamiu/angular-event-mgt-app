@@ -1,11 +1,18 @@
-eventsApp.controller('EventController', function EventController($scope, eventData, userData, $anchorScroll, $cookies) {
-    eventData.getEvent().$promise.
-        then(function (event) {
-            $scope.event = event;
-        }).
-        catch(function (error) {
-            console.log(error);
-        });
+eventsApp.controller('EventController', function EventController($scope, eventData, userData, $anchorScroll, $cookies, $routeParams, $route) {
+    // eventData.getEvent($routeParams.id).$promise.
+    //     then(function (event) {
+    //         $scope.event = event;
+    //     }).
+    //     catch(function (error) {
+    //         console.log(error);
+    //     });
+
+    $scope.event = $route.current.locals.event;
+
+    // console.log($route.current.pathParams.zx)
+    $scope.reload = function () {
+        $route.reload();
+    }
 
     $scope.upVoteSession = function(session) {
         userData.getUser($cookies.get('user')).$promise.

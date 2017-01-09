@@ -1,0 +1,20 @@
+<style>input.ng-dirty.ng-invalid {background-color: pink}</style>
+<div style="padding-left: 20px; padding-right: 20px;">
+    <!--<div class="container">-->
+        <h1>New Event</h1>
+        <hr/>
+        <form name="newEvent">
+            Name: <input type="text" required ng-model="event.name" placeholder="Name of the Event?"> <br>
+            Date: <input type="text" required ng-pattern="/\d\d/\d\d/\d\d\d\d/" ng-model="event.date" placeholder="Date of the Event?"> <br>
+            Time: <input type="text" ng-model="event.time" placeholder="Start and End time?"> <br>
+            Address: <input type="text" ng-model="event.location.address" placeholder="Address of the Event?"> <br>
+            City: <input type="text" ng-model="event.location.city" placeholder="In what City?">
+            State: <input type="text" ng-model="event.location.province" placeholder="In what State?"> <br>                        
+            Image URL: <input type="text" ng-model="event.imageUrl" placeholder="The Image URL?">                        
+            <img ng-src="{{event.imageUrl}}">
+            <br><br>
+            <button class="btn" ng-disabled="newEvent.$invalid" ng-click="saveEvent(event, newEvent)">Create Event</button>
+            <button class="btn" ng-click="cancelEdit(event)">Cancel Event</button>
+        </form>
+    <!--</div>-->
+</div>
